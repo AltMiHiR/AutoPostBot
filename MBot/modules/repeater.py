@@ -57,13 +57,13 @@ async def text_repeater():
             sleep_times = speed - (group_delay * len(chats))
             await asyncio.sleep(sleep_times)
 
-        # count += 1
-        # if count % 90 == 0:
-        #     await userbot.change_proxy()
-        #     try:
-        #         await app.send_message(POSTS_GROUP_ID, f"PROXY CHANGED: {userbot.proxy['hostname']}")
-        #     except:
-        #         LOGGER.info(f"PROXY CHANGED: {userbot.proxy['hostname']}")
+        count += 1
+        if count % 90 == 0:
+            await userbot.change_proxy()
+            try:
+                await app.send_message(POSTS_GROUP_ID, f"PROXY CHANGED: {userbot.proxy['hostname']}")
+            except:
+                LOGGER.info(f"PROXY CHANGED: {userbot.proxy['hostname']}")
 
 
 asyncio.create_task(text_repeater())

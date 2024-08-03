@@ -33,7 +33,7 @@ class MUserbot(Client):
     def __init__(self, session: str):
         self.proxy_generator = self.get_proxy()
         proxy = next(self.proxy_generator)
-        super().__init__("MUserbot", api_id=API_ID, api_hash=API_HASH, session_string=session, no_updates=True, proxy=proxy)
+        super().__init__("MUserbot", api_id=API_ID, api_hash=API_HASH, session_string=session, no_updates=False, proxy=proxy)
 
     def get_proxy(self):
         PROXIES = [
