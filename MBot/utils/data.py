@@ -4,6 +4,7 @@ CONTACT_BUTTON = ReplyKeyboardMarkup([[KeyboardButton("Send Phone Number", reque
 
 BOT_COMMANDS = [
     BotCommand("start", "Start The Bot"),
+    BotCommand("posting", "Enable/Disable Posting"),
     BotCommand("sm", "Set Message"),
     BotCommand("st", "Set Time"),
     BotCommand("delay", "Set Delay"),

@@ -2,7 +2,7 @@ from MBot import BOT_ID
 from MBot.mongo import mongodb
 
 # DB Collections
-onoffdb = mongodb.onoffdb
+posting_col = mongodb.posting
 textdb = mongodb.textdb
 msgdb = mongodb.msgdb
 limitdb = mongodb.limitdb
@@ -12,21 +12,21 @@ delaydb = mongodb.delaydb
 
 
 # Repeater Bot On/Off
-async def get_repeater_mode() -> bool:
-    on_off = await onoffdb.find_one()
-    if not on_off:
-        return True
-    repeater = on_off["repeater"]
-    return repeater
+async def get_posting_mode() -> bool:
+    on_off = await posting_col.find_one({})
+    if on_off:
+        posting = on_off["posting"]
+        return posting
+    return True
 
 
-async def set_repeater_mode(repeater: bool) -> bool:
-    repeater_mode = await get_repeater_mode()
-    if repeater == repeater_mode:
+async def set_posting_mode(posting: bool) -> bool:
+    posting_mode = await get_posting_mode()
+    if posting == posting_mode:
         return False
-    await onoffdb.update_one(
-        {"repeater": repeater_mode},
-        {"$set": {"repeater": repeater}},
+    await posting_col.update_one(
+        {"posting": posting_mode},
+        {"$set": {"posting": posting}},
         upsert=True,
     )
     return True
@@ -57,14 +57,14 @@ async def set_repeater_text(text: str) -> bool:
 async def get_post() -> int:
     post_doc = await msgdb.find_one({"_id": BOT_ID})
     if not post_doc:
-        return 0, 0
-    return post_doc["chat_id"], post_doc["message_id"]
+        return 0
+    return post_doc["message_id"]
 
 
-async def set_post(chat_id: int, message_id: int) -> bool:
+async def set_post(message_id: int) -> bool:
     await msgdb.update_one(
         {"_id": BOT_ID},
-        {"$set": {"chat_id": chat_id, "message_id": message_id}},
+        {"$set": {"message_id": message_id}},
         upsert=True,
     )
     return True
@@ -75,7 +75,7 @@ async def set_post(chat_id: int, message_id: int) -> bool:
 async def get_repeat_time() -> int:
     limit = await limitdb.find_one()
     if not limit:
-        return 5
+        return 120
     get_limit = limit["repeat_timer"]
     return get_limit
 

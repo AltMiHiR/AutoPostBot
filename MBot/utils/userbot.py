@@ -1,5 +1,6 @@
 from MBot import MUserbot, BOT_ID
 from MBot.mongo import mongodb
+from MBot.logging import LOGGER
 
 
 USERBOT = None
@@ -18,6 +19,7 @@ async def get_userbot() -> MUserbot:
         userbot = MUserbot(session_doc['session'])
         await userbot.start()
         USERBOT = userbot
+        LOGGER.info("Userbot Started.")
     except:
         return None
 

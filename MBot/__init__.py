@@ -1,9 +1,8 @@
-from config import API_ID, API_HASH, BOT_TOKEN, POST_GROUP_LINK
+from config import API_ID, API_HASH, BOT_TOKEN
 
 from pyromod import Client as MClient
 
 from pyrogram import Client
-from pyrogram.errors import UserAlreadyParticipant
 
 from MBot.logging import LOGGER
 from MBot.utils.data import BOT_COMMANDS
@@ -33,7 +32,7 @@ class MUserbot(Client):
     def __init__(self, session: str):
         self.proxy_generator = self.get_proxy()
         proxy = next(self.proxy_generator)
-        super().__init__("MUserbot", api_id=API_ID, api_hash=API_HASH, session_string=session, no_updates=False, proxy=proxy)
+        super().__init__("MUserbot", api_id=API_ID, api_hash=API_HASH, session_string=session, plugins=dict(root="MBot/plugins"), no_updates=False, proxy=proxy)
 
     def get_proxy(self):
         PROXIES = [
@@ -55,17 +54,6 @@ class MUserbot(Client):
         await super().start()
         me = await self.get_me()
         self.id = me.id
-
-        try:
-            mx = await self.get_chat(POST_GROUP_LINK)
-            await self.get_chat_member(mx.id, "me")
-        except:
-            try:
-                await self.join_chat(POST_GROUP_LINK)
-            except UserAlreadyParticipant:
-                pass
-            except Exception as err:
-                pass
 
     async def change_proxy(self):
         await self.stop()
