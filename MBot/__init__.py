@@ -38,18 +38,13 @@ class MUserbot(Client):
     def get_proxy(self):
         PROXIES = [
             {
-                "hostname": "103.172.84.68",
+                "hostname": "103.167.33.5",
                 "scheme": "socks5",
                 "port": 59101,
                 "username": "9919harshit",
                 "password": "UoqPXdyQpz",
-            },
-            {
-                "hostname": "103.172.85.53",
-                "scheme": "socks5",
-                "port": 59101,
-                "username": "9919harshit",
-                "password": "UoqPXdyQpz",
+                "slot": 4,
+                "index": 7
             }
         ]
         while True:
