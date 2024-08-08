@@ -8,7 +8,7 @@ from pyrogram.types import Message
 from MBot import app
 from MBot.logging import LOG_FILE_NAME
 from MBot.utils.userbot import get_userbot
-from MBot.utils.database import set_repeat_time, set_delay_time, add_served_chat, del_served_chat, get_served_chats, get_repeat_time
+from MBot.utils.database import set_repeat_time, set_delay_time, add_served_chat, del_served_chat, get_served_chats, clear_served_chats, get_repeat_time
 
 
 @app.on_message(filters.private & filters.command(["sm", "setmessage"]) & filters.user(OWNER_ID))
@@ -98,7 +98,7 @@ async def set_chats_ids(client, message: Message):
         await message.reply_text("successfully added in my database")
         return
     await message.reply_text("already added in my database")
-    
+
 
 @app.on_message(filters.private & filters.command(["dc", "delchat"]) & filters.user(OWNER_ID))
 async def del_chats_ids(client, message: Message):
@@ -115,7 +115,13 @@ async def del_chats_ids(client, message: Message):
         await message.reply_text("successfully removed from my database")
         return
     await message.reply_text("chat id not active in my database")
-    
+
+
+@app.on_message(filters.private & filters.command("clear") & filters.user(OWNER_ID))
+async def _clear_chats_ids(client, message: Message):
+    await clear_served_chats()
+    await message.reply_text("✅ **ᴄʟᴇᴀʀᴇᴅ ᴀʟʟ ᴄʜᴀᴛ ɪᴅs.**")
+
 
 @app.on_message(filters.private & filters.command("gc") & filters.user(OWNER_ID))
 async def group_chats(client, message: Message):

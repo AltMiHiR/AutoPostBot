@@ -48,7 +48,14 @@ class MUserbot(Client):
         self.id = me.id
         self.phone_number = f"+{me.phone_number}"
 
-    async def fetch_chats(self):
+        # Fetching Dialogs
+        group_data = await self.fetch_chats()
+        if group_data:
+            LOGGER.info("Fetched All Groups.")
+        else:
+            LOGGER.warning("Failed to Fetch Groups.")
+
+    async def fetch_chats(self) -> dict | None:
         group_data = {}
         try:
             async for dialog in self.get_dialogs():

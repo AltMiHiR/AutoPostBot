@@ -10,6 +10,7 @@ BOT_COMMANDS = [
     BotCommand("delay", "Set Delay"),
     BotCommand("addchat", "Add Chat"),
     BotCommand("delchat", "Delete Chat"),
+    BotCommand("clear", "Clear All Chat Ids"),
     BotCommand("gc", "Get Group Chats"),
     BotCommand("ids", "Fetch Group Chats"),
     BotCommand("stats", "Get Stats"),

@@ -118,10 +118,14 @@ async def add_served_chat(chat_id: int) -> bool:
 
 async def del_served_chat(chat_id: int) -> bool:
     is_served = await is_served_chat(chat_id)
-    if not is_served:
-        return False
-    await chatsdb.delete_one({"chat_id": chat_id})
-    return True
+    if is_served:
+        await chatsdb.delete_one({"chat_id": chat_id})
+        return True
+    return False
+
+
+async def clear_served_chats():
+    await chatsdb.delete_many({})
 
 
 # allowed Users Database
